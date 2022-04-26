@@ -19,7 +19,9 @@ struct Home: View {
              VStack(alignment: .leading){
                 HStack{
                     Spacer()
+                    
                     NavigationLink(destination: Dev(isActive: $devActive), isActive: $devActive, label: {Rectangle().frame(width: 0, height: 0)})
+                    
                     Button(action: {
                         devActive = true
                     }) {

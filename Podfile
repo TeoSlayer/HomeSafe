@@ -6,6 +6,7 @@ target 'HomeSafe' do
   use_frameworks!
 
   # Pods for Herd
+  pod 'GoogleUtilities'
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
@@ -20,6 +21,7 @@ target 'WidgetExtension' do
   use_frameworks!
 
   # Pods for Herd
+  pod 'GoogleUtilities'
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'OneSignal', '>= 3.0.0', '< 4.0'

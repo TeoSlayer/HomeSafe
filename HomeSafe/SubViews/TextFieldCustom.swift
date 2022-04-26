@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TextFieldCustom: View {
-    @State var code: String = "Text"
+    @Binding var code: String
     var body: some View {
         VStack(alignment: .leading){
             TextField("", text: $code)
@@ -31,6 +31,6 @@ struct TextFieldCustom: View {
 
 struct TextFieldCustom_Previews: PreviewProvider {
     static var previews: some View {
-        TextFieldCustom(code: "")
+        TextFieldCustom(code: .constant("Text"))
     }
 }

@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct Dev: View {
+    @Binding var isActive : Bool
     var body: some View {
         VStack(alignment: .leading){
             HStack{
-                Button(action: {}) {
+                Button(action: {
+                    isActive = false
+                }) {
                     TopButton(text: "Back", strokeColor: Color(accentGrey), backgroundColor: Color(accentPurple), textColor: Color(accentGrey))
                 }
                 Spacer()
@@ -51,15 +54,17 @@ struct Dev: View {
                         .foregroundColor(Color(accentGreen))
                     Text("Build 20220222 ")
                         .foregroundColor(Color(accentGreen))
-                }
+                }.padding(.bottom)
                 Spacer()
             }
         }.background(Color(accentPurple))
+         .ignoresSafeArea(.all)
+         .navigationBarHidden(true)
     }
 }
 
 struct Dev_Previews: PreviewProvider {
     static var previews: some View {
-        Dev()
+        Dev(isActive: .constant(true))
     }
 }

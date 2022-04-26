@@ -42,7 +42,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
       FirebaseApp.configure()
-    
+      do {
+        try Auth.auth().useUserAccessGroup("R7KRQUK276.io.usergy.HomeSafe")
+        print("Shared Access Group Configured")
+      } catch let error as NSError {
+        print("Error changing user access group: %@", error)
+      }
       
       OneSignal.setLogLevel(.LL_VERBOSE, visualLevel: .LL_NONE)
       OneSignal.initWithLaunchOptions(launchOptions)
@@ -63,6 +68,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
        })
       if(Auth.auth().currentUser?.uid != nil){
           UserData.Shared.RetrieveUser(UserId: Auth.auth().currentUser!.uid)
+          //store uid in App group
+          let defaults = UserDefaults(suiteName: "group.io.usergy.HomeSafe")
+          defaults?.set(Auth.auth().currentUser!.uid, forKey: "uid")
+          print("User is logged in, updating user defaults")
           if let deviceState = OneSignal.getDeviceState() {
               let userId = deviceState.userId
               print("OneSignal Push Player ID: ", userId ?? "called too early, not set yet")
@@ -75,6 +84,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
               let pushToken = deviceState.pushToken
               print("Device Push Token Identifier: ", pushToken ?? "no push token, not subscribed")
           }
+      }
+      else{
+         //store empty uid in userdefaults
+          let defaults = UserDefaults(suiteName: "group.io.usergy.HomeSafe")
+          defaults?.set("", forKey: "uid")
+          print("User is logged out, purging user defaults")
       }
     print("Application is starting up. ApplicationDelegate didFinishLaunchingWithOptions.")
     return true

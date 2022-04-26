@@ -36,6 +36,10 @@ class UserData: ObservableObject{
                     self.getPartnerStatus(Id: LocalUser!.PartnerCode)
                 }
                 self.LoggedIn = true
+                //update userdefaults uid with the new one
+                let defaults = UserDefaults(suiteName: "group.io.usergy.HomeSafe")
+                defaults?.set(Auth.auth().currentUser!.uid, forKey: "uid")
+                print("User has logged in, updating user defaults")
             } else {
                 print("Couldn't find the document")
             }
@@ -217,6 +221,8 @@ class UserData: ObservableObject{
         do { try Auth.auth().signOut()}
         catch { print("already logged out") }
         self.LoggedIn = false
+        let defaults = UserDefaults(suiteName: "group.io.usergy.HomeSafe")
+        defaults?.set("", forKey: "uid")
         self.purgeData()
     }
     
